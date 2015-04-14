@@ -3,11 +3,15 @@ var Inspirations = function(){
   var self = this;
   var white = new THREE.Color("rgb(255,255,250)");
   var black = new THREE.Color("rgb(0,0,0)");
+  var circleGeo = new THREE.SphereGeometry(3, 50, 50);
+  var circleMaterial = new THREE.MeshBasicMaterial({color: black});
 
   var newBump = function(){
-    var circleGeo = new THREE.SphereGeometry(3, 50, 50);
-    var circleMaterial = new THREE.MeshBasicMaterial({color: black});
-    return new THREE.Mesh(circleGeo, circleMaterial);
+    var bump = new THREE.Mesh(circleGeo, circleMaterial);
+    bump.position.z = 200;
+    bump.position.x = Math.floor(Math.random()*-1620) + 810;
+    bump.position.y = Math.floor(Math.random()*-810) + 405;
+    return bump;
   }
 
   self.init = function(){
@@ -20,10 +24,10 @@ var Inspirations = function(){
     top_mesh = new THREE.Mesh(top_geo, top_mat);
 
 
-    var bump = newBump();
-    bump.position.z = 200;
     scene.add(top_mesh);
-    scene.add(bump);
+    for(i=0; i<350; i++) {
+      scene.add(newBump());
+    }
 
     renderer = new THREE.WebGLRenderer();
     renderer.setSize( window.innerWidth, window.innerHeight );
